@@ -8,13 +8,150 @@
     tools:context=".ui.CharacterDetailFragment">
 
     <TextView
+        android:id="@+id/tv_character_details_name"
+        style="@style/TextColor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/iv_gender_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Rick Sanchez" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_gender_icon"
+        style="@style/IconColor"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/baseline_male_24"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_character_details_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_character_details_name" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_character_details_status_icon"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/ic_alive_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_character_details_status_and_species"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_character_details_status_and_species" />
+
+    <TextView
+        android:id="@+id/tv_character_details_status_and_species"
+        style="@style/TextColorVariant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Detalhes de Personagem"
-        android:textSize="22dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textSize="22sp"
+        app:layout_constraintStart_toEndOf="@+id/iv_character_details_status_icon"
+        app:layout_constraintTop_toBottomOf="@+id/tv_character_details_name"
+        tools:text="Alive - Human" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_character_details_status_and_species"
+        app:strokeWidth="0dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_character_details_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_generic_avatar" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/tv_character_details_origin_label"
+        style="@style/TextColorVariant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/character_origin_label"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
+
+    <TextView
+        android:id="@+id/tv_character_details_origin"
+        style="@style/TextColor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:maxLines="2"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_character_details_origin_label"
+        app:layout_constraintTop_toBottomOf="@+id/tv_character_details_origin_label"
+        tools:text="Earth" />
+
+    <TextView
+        android:id="@+id/tv_character_details_location_label"
+        style="@style/TextColorVariant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/character_card_item_last_known_location_label"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_character_details_origin" />
+
+    <TextView
+        android:id="@+id/tv_character_details_location"
+        style="@style/TextColor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:maxLines="2"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_character_details_location_label"
+        app:layout_constraintTop_toBottomOf="@+id/tv_character_details_location_label"
+        tools:text="Jerryborre" />
+
+    <TextView
+        android:id="@+id/tv_episodes_list_label"
+        style="@style/TextColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/character_episodes_appeared_label"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/tv_character_details_location"
+        app:layout_constraintTop_toBottomOf="@+id/tv_character_details_location" />
+
+    <com.airbnb.epoxy.EpoxyRecyclerView
+        android:id="@+id/epoxy_character_episodes"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:itemSpacing="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_episodes_list_label"
+        tools:itemCount="3"
+        tools:listitem="@layout/model_episode_list_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,8 +7,10 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
+import com.spectro.tech.rickycatalog.repository.CharacterListDataSource
 import com.spectro.tech.rickycatalog.repository.Repository
 import com.spectro.tech.rickycatalog.repository.RepositoryImpl
+import com.spectro.tech.rickycatalog.service.ApiInterface
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,9 +27,18 @@ object AppModule {
     @Singleton
     @Provides
     fun provideRepository(
+        apiInterface: ApiInterface,
         userDataStore: DataStore<Preferences>
     ): Repository {
-        return RepositoryImpl(userDataStore)
+        return RepositoryImpl(apiInterface, userDataStore)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCharacterListDataSource(
+        repository: Repository
+    ) : CharacterListDataSource {
+        return CharacterListDataSource(repository)
     }
 
     @Singleton

@@ -7,14 +7,21 @@
     android:layout_height="match_parent"
     tools:context=".ui.CharacterListFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Listagem de Personagens"
+    <com.airbnb.epoxy.EpoxyRecyclerView
+        android:id="@+id/epoxy_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        app:itemSpacing="16dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textSize="22dp"/>
+        app:layout_constraintVertical_bias="0.0"
+        app:spanCount="2"
+        tools:itemCount="9"
+        tools:listitem="@layout/model_character_list_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
