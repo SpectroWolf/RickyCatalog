@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.spectro.tech.rickycatalog.ui.SplashFragment"
+        android:label="fragment_splash_screen"
+        tools:layout="@layout/fragment_splash_screen" >
+        <action
+            android:id="@+id/action_splashFragment_to_characterListFragment"
+            app:destination="@id/characterListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/characterListFragment"
+        android:name="com.spectro.tech.rickycatalog.ui.CharacterListFragment"
+        android:label="fragment_character_list"
+        tools:layout="@layout/fragment_character_list" >
+        <action
+            android:id="@+id/action_characterListFragment_to_characterDetailFragment"
+            app:destination="@id/characterDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/characterDetailFragment"
+        android:name="com.spectro.tech.rickycatalog.ui.CharacterDetailFragment"
+        android:label="fragment_character_detail"
+        tools:layout="@layout/fragment_character_detail" />
+</navigation>
