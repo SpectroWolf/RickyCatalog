@@ -1,7 +1,9 @@
 <resources>
-    <string name="app_name">Rick Catalog</string>
+    <string name="app_name">Ricky Catalog</string>
 
     <string name="character_card_item_last_known_location_label">Last known location</string>
     <string name="character_origin_label">Origin</string>
     <string name="character_episodes_appeared_label">Episodes Appeared:</string>
+    <string name="character_list_fragment_title">Character List</string>
+    <string name="favorites_fragment_title">Favorites</string>
 </resources>

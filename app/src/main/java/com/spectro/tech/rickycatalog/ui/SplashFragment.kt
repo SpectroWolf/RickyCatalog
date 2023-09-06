@@ -48,7 +48,7 @@ class SplashFragment : Fragment() {
     }
 
     private fun goToCharacterList() {
-        findNavController().navigate(R.id.action_splashFragment_to_characterListFragment)
+        findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
     }
 
     private fun endAnimationListener() {

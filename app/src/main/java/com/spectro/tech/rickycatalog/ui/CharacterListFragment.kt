@@ -12,6 +12,7 @@ import androidx.paging.PagingData
 import com.spectro.tech.rickycatalog.R
 import com.spectro.tech.rickycatalog.databinding.FragmentCharacterListBinding
 import com.spectro.tech.rickycatalog.epoxy.CharacterListController
+import com.spectro.tech.rickycatalog.epoxy.epoxyLoadingState
 import com.spectro.tech.rickycatalog.model.domain.CharacterDTO
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -39,8 +40,6 @@ class CharacterListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupToolbar()
-        showStatusBar(true)
         initEpoxyRecyclerView()
 
     }
@@ -61,16 +60,6 @@ class CharacterListFragment : Fragment() {
 
     private fun getCharacterId(characterDTO: CharacterDTO) {
         viewModel.setCharacter(characterDTO)
-        findNavController().navigate(R.id.action_characterListFragment_to_characterDetailFragment)
-    }
-
-    private fun showStatusBar(show: Boolean) {
-        viewModel.showStatusBar(show)
-    }
-
-    private fun setupToolbar() {
-        viewModel.setToolbarTitleText("Characters")
-        viewModel.setToolbarVisibility(true)
-        viewModel.setToolbarBackButtonVisibility(false)
+        findNavController().navigate(R.id.action_homeFragment_to_characterDetailFragment)
     }
 }
