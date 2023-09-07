@@ -64,8 +64,8 @@ class HomeFragment : Fragment() {
             resources.getString(R.string.character_list_fragment_title)
         )
         adapter.addFragment(
-            FavoriteFragment(),
-            resources.getString(R.string.favorites_fragment_title)
+            CommentsFragment(),
+            resources.getString(R.string.comments_fragment_title)
         )
         binding.viewPager.offscreenPageLimit = adapter.itemCount
 

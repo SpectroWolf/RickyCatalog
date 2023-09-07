@@ -8,6 +8,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import com.spectro.tech.rickycatalog.model.domain.CharacterDTO
+import com.spectro.tech.rickycatalog.model.domain.Comments
 import com.spectro.tech.rickycatalog.model.domain.EpisodeDTO
 import com.spectro.tech.rickycatalog.repository.CharacterListDataSource
 import com.spectro.tech.rickycatalog.repository.Repository
@@ -42,6 +43,9 @@ class MainViewModel @Inject constructor(
 
     private var _episodeList = MutableLiveData<BasicApiResponse<List<EpisodeDTO>>>()
     val episodeList: LiveData<BasicApiResponse<List<EpisodeDTO>>> = _episodeList
+
+    private var _firestoreComments = MutableLiveData<List<Comments>>()
+    val firestoreComments: LiveData<List<Comments>> = _firestoreComments
 
     val flow = Pager(
         PagingConfig(
@@ -90,6 +94,26 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             val response = repository.getEpisodeRange(episodesId)
             _episodeList.postValue(response)
+        }
+    }
+
+    fun getComments(){
+        viewModelScope.launch {
+            val response = repository.getAllComments()
+            _firestoreComments.postValue(response.first!!)
+
+        }
+    }
+
+    fun upsertComment(comments: Comments, onResult: (Boolean, String) -> Unit){
+        viewModelScope.launch {
+            repository.upSert(comments, onResult)
+        }
+    }
+
+    fun deleteComment(comments: Comments, onResult: (Boolean, String) -> Unit){
+        viewModelScope.launch {
+            repository.deleteComment(comments, onResult)
         }
     }
 }

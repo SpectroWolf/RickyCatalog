@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
+import com.google.firebase.firestore.FirebaseFirestore
 import com.spectro.tech.rickycatalog.repository.CharacterListDataSource
 import com.spectro.tech.rickycatalog.repository.Repository
 import com.spectro.tech.rickycatalog.repository.RepositoryImpl
@@ -28,9 +29,10 @@ object AppModule {
     @Provides
     fun provideRepository(
         apiInterface: ApiInterface,
-        userDataStore: DataStore<Preferences>
+        userDataStore: DataStore<Preferences>,
+        database: FirebaseFirestore
     ): Repository {
-        return RepositoryImpl(apiInterface, userDataStore)
+        return RepositoryImpl(apiInterface, userDataStore, database)
     }
 
     @Singleton
@@ -54,5 +56,11 @@ object AppModule {
                 appContext.preferencesDataStoreFile(USER_PREFERENCES)
             }
         )
+    }
+
+    @Singleton
+    @Provides
+    fun provideFireStoreInstance(): FirebaseFirestore {
+        return FirebaseFirestore.getInstance()
     }
 }

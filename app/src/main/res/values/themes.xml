@@ -69,4 +69,44 @@
         <item name="tabTextColor">@color/light_theme_on_surface</item>
         <item name="tabSelectedTextColor">@color/light_theme_button_bg</item>
     </style>
+
+    <style name="AlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="colorSurface">@color/light_theme_surface</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/TitleTextStyle</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/BodyTextStyle</item>
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+    </style>
+
+    <style name="TitleTextStyle" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textColor">@color/light_theme_on_surface</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="BodyTextStyle" parent="MaterialAlertDialog.MaterialComponents.Body.Text">
+        <item name="android:textColor">@color/light_theme_on_surface</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/light_theme_button_bg</item>
+        <item name="rippleColor">@color/light_theme_button_bg</item>
+    </style>
+
+    <style name="NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/light_theme_on_surface</item>
+        <item name="rippleColor">@color/light_theme_on_surface</item>
+    </style>
+
+    <style name="FAB">
+        <item name="android:backgroundTint">@color/light_theme_button_bg</item>
+        <item name="android:textColor">@color/light_theme_button_text</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:tint">@color/light_theme_button_text</item>
+    </style>
+
 </resources>
