@@ -7,11 +7,11 @@ import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.spectro.tech.rickycatalog.R
 
 @EpoxyModelClass
-abstract class EpoxyLoadingState :
-    EpoxyModelWithHolder<EpoxyLoadingState.Holder>() {
+abstract class EpoxyCommentEmptyState :
+    EpoxyModelWithHolder<EpoxyCommentEmptyState.Holder>() {
 
     override fun getDefaultLayout(): Int {
-        return R.layout.model_loading
+        return R.layout.model_empty_comments
     }
 
     inner class Holder : EpoxyHolder() {

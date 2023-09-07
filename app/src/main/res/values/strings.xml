@@ -6,4 +6,5 @@
     <string name="character_episodes_appeared_label">Episodes Appeared:</string>
     <string name="character_list_fragment_title">Character List</string>
     <string name="comments_fragment_title">Comments</string>
+    <string name="empty_state_comment">Nothing to show here, please add an comment below.</string>
 </resources>

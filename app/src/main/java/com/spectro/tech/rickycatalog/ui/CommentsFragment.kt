@@ -5,13 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.spectro.tech.rickycatalog.R
 import com.spectro.tech.rickycatalog.databinding.FragmentCommentsBinding
+import com.spectro.tech.rickycatalog.epoxy.CommentListController
 import com.spectro.tech.rickycatalog.model.domain.Comments
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.random.Random
@@ -23,6 +26,8 @@ class CommentsFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: MainViewModel by activityViewModels()
+
+    private lateinit var epoxyController: CommentListController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,8 +42,14 @@ class CommentsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initEpoxyRecyclerView()
         initListeners()
+        getComments()
+    }
 
+    private fun initEpoxyRecyclerView() {
+        epoxyController = CommentListController(::editComments, ::deleteComments)
+        binding.epoxyCharacterComments.setController(epoxyController)
     }
 
     private fun initListeners() {
@@ -49,6 +60,35 @@ class CommentsFragment : Fragment() {
 
     private fun getComments() {
         viewModel.getComments()
+
+        viewModel.firestoreComments.observe(viewLifecycleOwner) {
+            epoxyController.setData(it)
+        }
+    }
+
+    private fun deleteComments(comments: Comments) {
+
+        val positiveButton = "Confirm"
+        val negativeButton = "Close"
+
+        val builder = MaterialAlertDialogBuilder(requireContext(), R.style.AlertDialogTheme)
+        builder.setTitle("Deleting Comment")
+        builder.setMessage("Do you really wish to delete this comment?")
+        builder.setCancelable(false)
+
+        builder.setPositiveButton(positiveButton) { dialog, _ ->
+            viewModel.deleteComment(comments, ::deleteSnackbar)
+            dialog.dismiss()
+        }
+        builder.setNegativeButton(negativeButton) { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        builder.show()
+    }
+
+    private fun editComments(comments: Comments) {
+
     }
 
     private fun addCommentDialog() {
@@ -91,7 +131,7 @@ class CommentsFragment : Fragment() {
                 if (isValid) {
 
                     val addComment = Comments(
-                        Random.nextInt(0, 1000),
+                        Random.nextInt(0, 1000).toString(),
                         characterName,
                         comment
                     )
@@ -116,6 +156,11 @@ class CommentsFragment : Fragment() {
             errorMessage
         }
 
+        if (show) {
+            viewModel.clearCommentsList()
+            viewModel.getComments()
+        }
+
         val builder = MaterialAlertDialogBuilder(requireContext(), R.style.AlertDialogTheme)
         builder.setTitle(title)
         builder.setMessage(message)
@@ -126,5 +171,27 @@ class CommentsFragment : Fragment() {
         }
 
         builder.show()
+    }
+
+    private fun deleteSnackbar(show: Boolean, errorMessage: String) {
+
+        val message = if (show) {
+            "Comment deleted successfully!"
+        } else {
+            "Error while deleting comment. Error details: $errorMessage"
+        }
+
+        if (show) {
+            viewModel.clearCommentsList()
+            viewModel.getComments()
+        }
+
+        val snackbar = Snackbar.make(binding.fragmentComments, message, Snackbar.LENGTH_SHORT)
+
+        snackbar.setAction("Close") {
+            snackbar.dismiss()
+        }
+
+        snackbar.show()
     }
 }

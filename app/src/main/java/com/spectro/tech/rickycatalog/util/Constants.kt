@@ -6,6 +6,6 @@ class Constants {
         const val BASE_URL = "https://rickandmortyapi.com/api/"
         const val PAGE_SIZE = 20
         const val PRE_FETCH_DISTANCE = PAGE_SIZE * 2
-        const val FIRESTORE_PATH_CHARACTERS = "products"
+        const val FIRESTORE_PATH_COMMENTS = "comments"
     }
 }

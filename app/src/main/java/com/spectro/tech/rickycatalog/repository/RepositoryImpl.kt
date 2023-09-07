@@ -6,13 +6,12 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.google.firebase.firestore.FirebaseFirestore
-import com.spectro.tech.rickycatalog.model.domain.CharacterDTO
 import com.spectro.tech.rickycatalog.model.domain.Comments
 import com.spectro.tech.rickycatalog.model.domain.EpisodeDTO
 import com.spectro.tech.rickycatalog.model.network.CharacterListResponse
 import com.spectro.tech.rickycatalog.service.ApiInterface
 import com.spectro.tech.rickycatalog.util.BasicApiResponse
-import com.spectro.tech.rickycatalog.util.Constants.Companion.FIRESTORE_PATH_CHARACTERS
+import com.spectro.tech.rickycatalog.util.Constants.Companion.FIRESTORE_PATH_COMMENTS
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -80,7 +79,7 @@ class RepositoryImpl @Inject constructor(
         val commentsList: List<Comments>
 
         try {
-            commentsList = database.collection(FIRESTORE_PATH_CHARACTERS).get()
+            commentsList = database.collection(FIRESTORE_PATH_COMMENTS).get()
                 .await().documents.mapNotNull { documentSnapshot ->
                     documentSnapshot.toObject(Comments::class.java)
                 }
@@ -103,7 +102,7 @@ class RepositoryImpl @Inject constructor(
     ) {
         try {
 
-            database.collection(FIRESTORE_PATH_CHARACTERS).document(comments.id.toString())
+            database.collection(FIRESTORE_PATH_COMMENTS).document(comments.id.toString())
                 .set(comments)
                 .addOnSuccessListener {
                     onResult(true, "")
@@ -122,7 +121,7 @@ class RepositoryImpl @Inject constructor(
     ) {
         try {
 
-            database.collection(FIRESTORE_PATH_CHARACTERS).document(comments.id.toString())
+            database.collection(FIRESTORE_PATH_COMMENTS).document(comments.id.toString())
                 .delete()
                 .addOnSuccessListener {
                     onResult(true, "")
