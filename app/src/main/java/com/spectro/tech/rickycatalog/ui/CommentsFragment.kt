@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -48,7 +47,7 @@ class CommentsFragment : Fragment() {
     }
 
     private fun initEpoxyRecyclerView() {
-        epoxyController = CommentListController(::editComments, ::deleteComments)
+        epoxyController = CommentListController(::editCommentsDialog, ::deleteComments)
         binding.epoxyCharacterComments.setController(epoxyController)
     }
 
@@ -87,8 +86,61 @@ class CommentsFragment : Fragment() {
         builder.show()
     }
 
-    private fun editComments(comments: Comments) {
+    private fun editCommentsDialog(comments: Comments) {
 
+        val customDialog =
+            LayoutInflater.from(requireContext()).inflate(R.layout.dialog_add_layout, null)
+
+        customDialog.findViewById<TextInputEditText>(R.id.dialog_edt_character).setText(comments.characterName)
+        customDialog.findViewById<TextInputEditText>(R.id.dialog_edt_comments).setText(comments.comment)
+
+        val builder = MaterialAlertDialogBuilder(requireContext(), R.style.AlertDialogTheme)
+
+        builder.setTitle("Editing comment")
+        builder.setView(customDialog)
+        builder.setCancelable(false)
+        builder.setPositiveButton("Edit", null)
+        builder.setNegativeButton("Close") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        val dialog = builder.create()
+
+        dialog.setOnShowListener {
+            dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener {
+
+                val characterName =
+                    customDialog.findViewById<TextInputEditText>(R.id.dialog_edt_character).text.toString()
+
+                val comment =
+                    customDialog.findViewById<TextInputEditText>(R.id.dialog_edt_comments).text.toString()
+
+                var isValid = true
+
+                if (characterName.isBlank() || comment.isBlank()) {
+                    isValid = false
+                    Toast.makeText(
+                        requireContext(),
+                        "Insert Character's name and your comment to continue.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                if (isValid) {
+
+                    val editComment = Comments(
+                        comments.id,
+                        characterName,
+                        comment
+                    )
+
+                    viewModel.upsertComment(editComment, ::editCommentDialog)
+                    dialog.dismiss()
+                }
+            }
+        }
+
+        dialog.show()
     }
 
     private fun addCommentDialog() {
@@ -136,7 +188,7 @@ class CommentsFragment : Fragment() {
                         comment
                     )
 
-                    viewModel.upsertComment(addComment, ::onSuccessDialog)
+                    viewModel.upsertComment(addComment, ::addCommentConfirmDialog)
                     dialog.dismiss()
                 }
             }
@@ -145,13 +197,41 @@ class CommentsFragment : Fragment() {
         dialog.show()
     }
 
-    private fun onSuccessDialog(show: Boolean, errorMessage: String) {
+    private fun addCommentConfirmDialog(show: Boolean, errorMessage: String) {
 
-        val title = "Adding Comment"
+        val title = "Adding comment"
         val positiveButton = "Close"
 
         val message = if (show) {
             "Comment added successfully!"
+        } else {
+            errorMessage
+        }
+
+        if (show) {
+            viewModel.clearCommentsList()
+            viewModel.getComments()
+        }
+
+        val builder = MaterialAlertDialogBuilder(requireContext(), R.style.AlertDialogTheme)
+        builder.setTitle(title)
+        builder.setMessage(message)
+        builder.setCancelable(false)
+
+        builder.setPositiveButton(positiveButton) { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        builder.show()
+    }
+
+    private fun editCommentDialog(show: Boolean, errorMessage: String) {
+
+        val title = "Editing Comment"
+        val positiveButton = "Close"
+
+        val message = if (show) {
+            "Comment edited successfully!"
         } else {
             errorMessage
         }
