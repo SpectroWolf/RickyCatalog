@@ -116,8 +116,4 @@ class MainViewModel @Inject constructor(
             repository.deleteComment(comments, onResult)
         }
     }
-
-    fun clearCommentsList(){
-        _firestoreComments.value = emptyList()
-    }
 }

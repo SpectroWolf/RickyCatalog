@@ -209,7 +209,6 @@ class CommentsFragment : Fragment() {
         }
 
         if (show) {
-            viewModel.clearCommentsList()
             viewModel.getComments()
         }
 
@@ -237,7 +236,6 @@ class CommentsFragment : Fragment() {
         }
 
         if (show) {
-            viewModel.clearCommentsList()
             viewModel.getComments()
         }
 
@@ -262,7 +260,6 @@ class CommentsFragment : Fragment() {
         }
 
         if (show) {
-            viewModel.clearCommentsList()
             viewModel.getComments()
         }
 
