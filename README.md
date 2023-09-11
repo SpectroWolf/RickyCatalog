@@ -8,7 +8,7 @@ Clone esse repositório e importe no **Android Studio**
 ```bash
 git clone git@github.com:SpectroWolf/RickyCatalog.git
 ```
-Garanta que sua versão do JDK seja o Java 17 para evitar possíveis problemas de compatibilidade, seguindo seguinte caminho: File -> Settings -> Build, Execution, Deployment -> Build Tools -> Gradle
+Garanta que sua versão do JDK seja o Java 17 para evitar possíveis problemas de compatibilidade, seguindo o seguinte caminho: File -> Settings -> Build, Execution, Deployment -> Build Tools -> Gradle
 
 ![image](https://github.com/SpectroWolf/RickyCatalog/assets/52512867/2334c4a7-948b-48c4-a69a-0ea08dae8a07)
 
